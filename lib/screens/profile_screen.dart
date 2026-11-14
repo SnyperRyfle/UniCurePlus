@@ -67,7 +67,7 @@ class ProfileScreen extends StatelessWidget {
           SecondaryButton(
             label: 'Notifikasi',
             icon: Icons.notifications_none,
-            onPressed: () => context.go('/notifikasi'),
+            onPressed: () => context.push('/notifikasi'),
           ),
           const SizedBox(height: AppSpacing.md),
           PrimaryButton(
