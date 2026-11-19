@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../screens/home_screen.dart';
 import '../screens/login_screen.dart';
+import '../models/app_models.dart';
 import '../screens/notifications_screen.dart';
 import '../screens/pelawaan_detail_screen.dart';
 import '../screens/pelawaan_list_screen.dart';
@@ -108,7 +109,12 @@ class AppRouter {
       ),
       GoRoute(
         path: '/invois/baru',
-        builder: (_, __) => const InvoiceCreateScreen(),
+        builder: (_, state) {
+          final extra = state.extra;
+          return InvoiceCreateScreen(
+            draft: extra is Invoice && extra.status == 'Draf' ? extra : null,
+          );
+        },
       ),
       GoRoute(
         path: '/invois/berjaya',

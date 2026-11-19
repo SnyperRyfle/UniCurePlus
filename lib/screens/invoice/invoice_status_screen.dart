@@ -5,6 +5,7 @@ import '../../theme/app_theme.dart';
 import '../../widgets/brand_app_bar.dart';
 import '../../widgets/common_widgets.dart';
 import '../../widgets/primary_button.dart';
+import '../../models/app_models.dart';
 
 /// V13 - Status invois (Invoice status)
 class InvoiceStatusScreen extends StatelessWidget {
@@ -14,10 +15,46 @@ class InvoiceStatusScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final inv = DummyData.invoices.firstWhere(
-      (e) => e.id == invoiceId,
-      orElse: () => DummyData.invoices.first,
-    );
+    final routeInvoice = GoRouterState.of(context).extra;
+    final inv = routeInvoice is Invoice
+        ? routeInvoice
+        : DummyData.invoices.firstWhere(
+            (e) => e.id == invoiceId,
+            orElse: () => DummyData.invoices.first,
+          );
+    final isDraft = inv.status == 'Draf';
+    final isPaid = inv.status == 'Dibayar';
+    final isSubmitted = !isDraft;
+    final timeline = [
+      TimelineStep(
+        title: 'Invois disediakan',
+        subtitle: inv.date,
+        done: true,
+      ),
+      TimelineStep(
+        title: 'Invois dihantar',
+        subtitle: isSubmitted ? inv.date : 'Belum dihantar',
+        done: isSubmitted,
+      ),
+      TimelineStep(
+        title: 'Semakan kewangan',
+        subtitle: isPaid
+            ? 'Selesai'
+            : isDraft
+                ? 'Menunggu penghantaran'
+                : 'Dalam proses',
+        done: isPaid,
+      ),
+      TimelineStep(
+        title: 'Pembayaran',
+        subtitle: isPaid
+            ? 'Dibayar'
+            : isDraft
+                ? 'Menunggu penghantaran'
+                : 'Menunggu',
+        done: isPaid,
+      ),
+    ];
 
     return Scaffold(
       appBar: BrandAppBar(showBack: true, onBack: () => context.go('/invois')),
@@ -28,8 +65,8 @@ class InvoiceStatusScreen extends StatelessWidget {
             children: [
               const Expanded(
                 child: Text('Status invois',
-                    style: TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w800)),
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
               ),
               StatusPill(label: inv.status),
             ],
@@ -58,10 +95,10 @@ class InvoiceStatusScreen extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.lg),
           const SectionLabel('Status pembayaran'),
-          const Card(
+          Card(
             child: Padding(
-              padding: EdgeInsets.all(AppSpacing.lg),
-              child: StatusTimeline(steps: DummyData.invoiceTimeline),
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              child: StatusTimeline(steps: timeline),
             ),
           ),
           const SizedBox(height: AppSpacing.xl),
