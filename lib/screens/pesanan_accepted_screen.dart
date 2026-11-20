@@ -15,7 +15,10 @@ class PesananAcceptedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const BrandAppBar(showBack: true),
+      appBar: BrandAppBar(
+        showBack: true,
+        onBack: () => context.go('/pesanan'),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [

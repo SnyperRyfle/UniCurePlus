@@ -7,15 +7,29 @@ import '../../widgets/common_widgets.dart';
 import '../../widgets/primary_button.dart';
 
 /// V11 - Invois (Invoice list)
-class InvoiceListScreen extends StatelessWidget {
+class InvoiceListScreen extends StatefulWidget {
   const InvoiceListScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final invoiceStore = InvoiceStore.instance;
+  State<InvoiceListScreen> createState() => _InvoiceListScreenState();
+}
 
+class _InvoiceListScreenState extends State<InvoiceListScreen> {
+  final invoiceStore = InvoiceStore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    invoiceStore.loadInvoices();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const BrandAppBar(showBack: true),
+      appBar: BrandAppBar(
+        showBack: true,
+        onBack: () => context.go('/pesanan'),
+      ),
       body: AnimatedBuilder(
         animation: invoiceStore,
         builder: (context, _) {
@@ -36,6 +50,37 @@ class InvoiceListScreen extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.lg),
               const SectionLabel('Invois terkini'),
+              if (invoiceStore.isLoading && invoices.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.all(AppSpacing.xl),
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+              if (invoiceStore.loadError != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: AppSpacing.md),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        invoiceStore.loadError!,
+                        style: const TextStyle(color: AppColors.danger),
+                      ),
+                      TextButton(
+                        onPressed: invoiceStore.isLoading
+                            ? null
+                            : invoiceStore.loadInvoices,
+                        child: const Text('Cuba lagi'),
+                      ),
+                    ],
+                  ),
+                ),
+              if (!invoiceStore.isLoading &&
+                  invoiceStore.loadError == null &&
+                  invoices.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.all(AppSpacing.xl),
+                  child: Center(child: Text('Tiada invois')),
+                ),
               ...invoices.map(
                 (inv) => Padding(
                   padding: const EdgeInsets.only(bottom: AppSpacing.md),

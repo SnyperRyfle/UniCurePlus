@@ -68,6 +68,18 @@ class Order {
     required this.amount,
     required this.status,
   });
+
+  factory Order.fromJson(Map<String, dynamic> json) {
+    return Order(
+      id: json['id'] as String,
+      poNumber: json['po_number'] as String,
+      title: json['title'] as String,
+      agency: json['agency'] as String,
+      quantity: (json['quantity'] as num).toInt(),
+      amount: (json['amount'] as num).toDouble(),
+      status: json['status'] as String,
+    );
+  }
 }
 
 class Invoice {
