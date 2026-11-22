@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../models/app_models.dart';
+import 'auth_session.dart';
 
 class InvoicesApiException implements Exception {
   final String message;
@@ -15,17 +16,25 @@ class InvoicesApiException implements Exception {
 }
 
 class InvoicesApi {
-  InvoicesApi({http.Client? client}) : _client = client ?? http.Client();
+  InvoicesApi({http.Client? client, AuthSession? session})
+      : _client = client ?? http.Client(),
+        _session = session ?? AuthSession.instance;
 
   static final Uri _endpoint =
       Uri.parse('http://localhost/uitm_api/invoices.php');
 
   final http.Client _client;
+  final AuthSession _session;
 
   Future<List<Invoice>> fetchInvoices() async {
     late final http.Response response;
     try {
-      response = await _client.get(_endpoint).timeout(
+      response = await _client
+          .get(
+            _endpoint,
+            headers: _session.authorizationHeaders,
+          )
+          .timeout(
             const Duration(seconds: 10),
           );
     } on TimeoutException {
@@ -65,7 +74,10 @@ class InvoicesApi {
       response = await _client
           .post(
             _endpoint,
-            headers: const {'Content-Type': 'application/json'},
+            headers: {
+              'Content-Type': 'application/json',
+              ..._session.authorizationHeaders,
+            },
             body: jsonEncode({
               'invoice_no': invoiceNo.trim(),
               'order_id': orderId,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../data/dummy_data.dart';
+import '../services/auth_api.dart';
+import '../services/auth_session.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_bottom_nav.dart';
 import '../widgets/brand_app_bar.dart';
@@ -8,8 +10,28 @@ import '../widgets/common_widgets.dart';
 import '../widgets/primary_button.dart';
 
 /// V15 - Profil syarikat (Company profile)
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool _isLoggingOut = false;
+
+  Future<void> _logout() async {
+    setState(() => _isLoggingOut = true);
+    try {
+      await AuthSession.instance.logout();
+    } on AuthApiException catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.message)),
+      );
+      setState(() => _isLoggingOut = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +93,9 @@ class ProfileScreen extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           PrimaryButton(
-            label: 'Log keluar',
+            label: _isLoggingOut ? 'Sedang log keluar...' : 'Log keluar',
             icon: Icons.logout,
-            onPressed: () => context.go('/login'),
+            onPressed: _isLoggingOut ? null : _logout,
           ),
         ],
       ),

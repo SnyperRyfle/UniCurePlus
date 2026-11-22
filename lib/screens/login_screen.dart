@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../services/auth_api.dart';
+import '../services/auth_session.dart';
 import '../theme/app_theme.dart';
 import '../widgets/common_widgets.dart';
 import '../widgets/primary_button.dart';
@@ -13,15 +16,41 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _userCtrl = TextEditingController(text: 'pembekal.contoh');
-  final _passCtrl = TextEditingController(text: '••••••••');
+  final _userCtrl = TextEditingController();
+  final _passCtrl = TextEditingController();
   bool _obscure = true;
+  bool _isSubmitting = false;
+  String? _errorMessage;
 
   @override
   void dispose() {
     _userCtrl.dispose();
     _passCtrl.dispose();
     super.dispose();
+  }
+
+  Future<void> _login() async {
+    if (_userCtrl.text.trim().isEmpty || _passCtrl.text.isEmpty) {
+      setState(() => _errorMessage = 'Masukkan nama pengguna dan kata laluan.');
+      return;
+    }
+
+    setState(() {
+      _isSubmitting = true;
+      _errorMessage = null;
+    });
+
+    try {
+      await AuthSession.instance.login(
+        username: _userCtrl.text,
+        password: _passCtrl.text,
+      );
+      if (mounted) context.go('/home');
+    } on AuthApiException catch (error) {
+      if (mounted) setState(() => _errorMessage = error.message);
+    } finally {
+      if (mounted) setState(() => _isSubmitting = false);
+    }
   }
 
   @override
@@ -64,7 +93,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   label: 'Pengguna',
                   child: TextField(
                     controller: _userCtrl,
-                    decoration: const InputDecoration(hintText: 'Nama pengguna'),
+                    decoration:
+                        const InputDecoration(hintText: 'Nama pengguna'),
                   ),
                 ),
                 LabeledField(
@@ -84,9 +114,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
+                if (_errorMessage != null) ...[
+                  const SizedBox(height: AppSpacing.sm),
+                  Text(
+                    _errorMessage!,
+                    style: const TextStyle(color: AppColors.danger),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+                const SizedBox(height: AppSpacing.md),
                 PrimaryButton(
-                  label: 'Log masuk',
-                  onPressed: () => context.go('/home'),
+                  label: _isSubmitting ? 'Sedang log masuk...' : 'Log masuk',
+                  onPressed: _isSubmitting ? null : _login,
                 ),
                 const SizedBox(height: AppSpacing.md),
                 TextButton(

@@ -22,6 +22,7 @@ import '../screens/tender/tender_price_screen.dart';
 import '../screens/tender/tender_review_screen.dart';
 import '../screens/tender/tender_spec_screen.dart';
 import '../screens/tender/tender_success_screen.dart';
+import '../services/auth_session.dart';
 
 /// Central go_router configuration for the whole app.
 class AppRouter {
@@ -29,6 +30,15 @@ class AppRouter {
 
   static final GoRouter router = GoRouter(
     initialLocation: '/login',
+    refreshListenable: AuthSession.instance,
+    redirect: (context, state) {
+      final isLoggedIn = AuthSession.instance.isAuthenticated;
+      final isLoginRoute = state.matchedLocation == '/login';
+
+      if (!isLoggedIn && !isLoginRoute) return '/login';
+      if (isLoggedIn && isLoginRoute) return '/home';
+      return null;
+    },
     routes: [
       GoRoute(
         path: '/login',
