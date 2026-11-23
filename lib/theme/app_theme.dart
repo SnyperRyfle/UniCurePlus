@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Central color palette for the FindProcurement+ app.
+/// Central color palette for the UniCurePlus app.
 /// The wireframe is black & white / grayscale, so the theme leans monochrome.
 class AppColors {
   AppColors._();

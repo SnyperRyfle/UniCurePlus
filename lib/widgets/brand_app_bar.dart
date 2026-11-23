@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
-/// The "FindProcurement+" top brand bar seen on most screens.
+/// The "UniCurePlus" top brand bar seen on most screens.
 class BrandAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBack;
   final VoidCallback? onBack;
@@ -33,7 +33,7 @@ class BrandAppBar extends StatelessWidget implements PreferredSizeWidget {
                 size: 14, color: AppColors.white),
           ),
           const SizedBox(width: AppSpacing.sm),
-          const Text('FindProcurement+'),
+          const Text('UniCurePlus'),
         ],
       ),
       actions: const [

@@ -5,17 +5,17 @@ import 'theme/app_theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const FindProcurementApp());
+  runApp(const UniCurePlusApp());
 }
 
 /// UiTM Mobile eProcurement — PEMBEKAL (Supplier) flow.
-class FindProcurementApp extends StatelessWidget {
-  const FindProcurementApp({super.key});
+class UniCurePlusApp extends StatelessWidget {
+  const UniCurePlusApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'FindProcurement+',
+      title: 'UniCurePlus',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       routerConfig: AppRouter.router,

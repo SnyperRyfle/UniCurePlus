@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: AppColors.white, size: 18),
                     ),
                     const SizedBox(width: AppSpacing.sm),
-                    const Text('FindProcurement+',
+                    const Text('UniCurePlus',
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w700)),
                   ],
