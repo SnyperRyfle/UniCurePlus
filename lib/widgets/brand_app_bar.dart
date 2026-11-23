@@ -26,11 +26,11 @@ class BrandAppBar extends StatelessWidget implements PreferredSizeWidget {
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: AppColors.black,
+              color: AppColors.brandPurple,
               borderRadius: BorderRadius.circular(6),
             ),
             child: const Icon(Icons.inventory_2_outlined,
-                size: 14, color: AppColors.white),
+                size: 14, color: AppColors.brandGold),
           ),
           const SizedBox(width: AppSpacing.sm),
           const Text('UniCurePlus'),
@@ -43,8 +43,11 @@ class BrandAppBar extends StatelessWidget implements PreferredSizeWidget {
         SizedBox(width: AppSpacing.lg),
       ],
       bottom: const PreferredSize(
-        preferredSize: Size.fromHeight(1),
-        child: Divider(height: 1),
+        preferredSize: Size.fromHeight(2),
+        child: SizedBox(
+          height: 2,
+          child: ColoredBox(color: AppColors.brandGold),
+        ),
       ),
     );
   }

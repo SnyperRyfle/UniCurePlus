@@ -70,7 +70,7 @@ class _PelawaanListScreenState extends State<PelawaanListScreen> {
                         selected: selected,
                         onSelected: (_) => setState(() => _tab = i),
                         showCheckmark: false,
-                        selectedColor: AppColors.black,
+                        selectedColor: AppColors.brandPurple,
                         labelStyle: TextStyle(
                           color: selected ? AppColors.white : AppColors.grey700,
                           fontWeight: FontWeight.w600,

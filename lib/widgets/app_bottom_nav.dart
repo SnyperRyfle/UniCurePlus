@@ -29,7 +29,7 @@ class AppBottomNav extends StatelessWidget {
       onTap: (i) => _onTap(context, i),
       type: BottomNavigationBarType.fixed,
       backgroundColor: AppColors.white,
-      selectedItemColor: AppColors.black,
+      selectedItemColor: AppColors.brandPurple,
       unselectedItemColor: AppColors.grey500,
       selectedFontSize: 11,
       unselectedFontSize: 11,

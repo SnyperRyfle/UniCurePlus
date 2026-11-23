@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 /// Central color palette for the UniCurePlus app.
-/// The wireframe is black & white / grayscale, so the theme leans monochrome.
+/// UiTM-inspired purple and gold accents with neutral surfaces for readability.
 class AppColors {
   AppColors._();
 
+  static const Color brandPurple = Color(0xFF4B2C82);
+  static const Color brandGold = Color(0xFFFFC72C);
+  static const Color purple100 = Color(0xFFF1EBF7);
   static const Color black = Color(0xFF111111);
   static const Color white = Color(0xFFFFFFFF);
   static const Color grey900 = Color(0xFF1A1A1A);
@@ -13,7 +16,7 @@ class AppColors {
   static const Color grey300 = Color(0xFFCFCFCF);
   static const Color grey200 = Color(0xFFE4E4E4);
   static const Color grey100 = Color(0xFFF2F2F2);
-  static const Color scaffold = Color(0xFFFAFAFA);
+  static const Color scaffold = Color(0xFFFBF9FC);
 
   // Status accents (kept subtle to match the mono wireframe).
   static const Color success = Color(0xFF2E7D32);
@@ -42,9 +45,10 @@ class AppTheme {
     return base.copyWith(
       scaffoldBackgroundColor: AppColors.scaffold,
       colorScheme: const ColorScheme.light(
-        primary: AppColors.black,
+        primary: AppColors.brandPurple,
         onPrimary: AppColors.white,
-        secondary: AppColors.grey700,
+        secondary: AppColors.brandGold,
+        onSecondary: AppColors.black,
         surface: AppColors.white,
         onSurface: AppColors.black,
       ),
@@ -87,12 +91,13 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSpacing.radius),
-          borderSide: const BorderSide(color: AppColors.black, width: 1.5),
+          borderSide:
+              const BorderSide(color: AppColors.brandPurple, width: 1.5),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.black,
+          backgroundColor: AppColors.brandPurple,
           foregroundColor: AppColors.white,
           minimumSize: const Size.fromHeight(50),
           elevation: 0,
@@ -104,9 +109,9 @@ class AppTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.black,
+          foregroundColor: AppColors.brandPurple,
           minimumSize: const Size.fromHeight(50),
-          side: const BorderSide(color: AppColors.black),
+          side: const BorderSide(color: AppColors.brandPurple),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppSpacing.radius),
           ),
@@ -114,7 +119,7 @@ class AppTheme {
         ),
       ),
       textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(foregroundColor: AppColors.black),
+        style: TextButton.styleFrom(foregroundColor: AppColors.brandPurple),
       ),
       dividerTheme: const DividerThemeData(
         color: AppColors.grey200,
@@ -122,7 +127,7 @@ class AppTheme {
         space: 1,
       ),
       chipTheme: base.chipTheme.copyWith(
-        backgroundColor: AppColors.grey100,
+        backgroundColor: AppColors.purple100,
         side: const BorderSide(color: AppColors.grey200),
         labelStyle: const TextStyle(fontSize: 12, color: AppColors.grey700),
       ),

@@ -165,13 +165,15 @@ class StepHeader extends StatelessWidget {
                       height: 2,
                       color: i == 0
                           ? Colors.transparent
-                          : (active ? AppColors.black : AppColors.grey300),
+                          : (active
+                              ? AppColors.brandPurple
+                              : AppColors.grey300),
                     ),
                   ),
                   CircleAvatar(
                     radius: 12,
                     backgroundColor:
-                        active ? AppColors.black : AppColors.grey300,
+                        active ? AppColors.brandPurple : AppColors.grey300,
                     child: Text(
                       '${i + 1}',
                       style: TextStyle(
@@ -187,7 +189,7 @@ class StepHeader extends StatelessWidget {
                       color: i == steps.length - 1
                           ? Colors.transparent
                           : (i < currentIndex
-                              ? AppColors.black
+                              ? AppColors.brandPurple
                               : AppColors.grey300),
                     ),
                   ),
@@ -199,7 +201,7 @@ class StepHeader extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 10,
-                  color: active ? AppColors.black : AppColors.grey500,
+                  color: active ? AppColors.brandPurple : AppColors.grey500,
                   fontWeight: active ? FontWeight.w700 : FontWeight.w500,
                 ),
               ),
@@ -234,9 +236,12 @@ class StatusTimeline extends StatelessWidget {
                     height: 20,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: step.done ? AppColors.black : AppColors.white,
+                      color:
+                          step.done ? AppColors.brandPurple : AppColors.white,
                       border: Border.all(
-                        color: step.done ? AppColors.black : AppColors.grey300,
+                        color: step.done
+                            ? AppColors.brandPurple
+                            : AppColors.grey300,
                         width: 2,
                       ),
                     ),
@@ -249,7 +254,9 @@ class StatusTimeline extends StatelessWidget {
                     Expanded(
                       child: Container(
                         width: 2,
-                        color: step.done ? AppColors.black : AppColors.grey300,
+                        color: step.done
+                            ? AppColors.brandPurple
+                            : AppColors.grey300,
                       ),
                     ),
                 ],
@@ -266,7 +273,9 @@ class StatusTimeline extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: step.done ? AppColors.black : AppColors.grey700,
+                          color: step.done
+                              ? AppColors.brandPurple
+                              : AppColors.grey700,
                         ),
                       ),
                       const SizedBox(height: 2),

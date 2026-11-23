@@ -29,7 +29,7 @@ class PesananAcceptedScreen extends StatelessWidget {
               height: 72,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: AppColors.black, width: 2),
+                border: Border.all(color: AppColors.brandPurple, width: 2),
               ),
               child: const Icon(Icons.check, size: 36),
             ),

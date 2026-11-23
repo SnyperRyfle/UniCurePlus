@@ -69,11 +69,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: AppColors.black,
+                        color: AppColors.brandPurple,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Icon(Icons.inventory_2_outlined,
-                          color: AppColors.white, size: 18),
+                          color: AppColors.brandGold, size: 18),
                     ),
                     const SizedBox(width: AppSpacing.sm),
                     const Text('UniCurePlus',
