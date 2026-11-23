@@ -24,13 +24,15 @@ class AppBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: (i) => _onTap(context, i),
       type: BottomNavigationBarType.fixed,
-      backgroundColor: AppColors.white,
-      selectedItemColor: AppColors.brandPurple,
-      unselectedItemColor: AppColors.grey500,
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      selectedItemColor: isDark ? AppColors.brandGold : AppColors.brandPurple,
+      unselectedItemColor: isDark ? AppColors.grey300 : AppColors.grey500,
       selectedFontSize: 11,
       unselectedFontSize: 11,
       items: const [

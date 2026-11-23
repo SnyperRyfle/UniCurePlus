@@ -48,13 +48,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Center(
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 36,
-                  backgroundColor: AppColors.grey100,
-                  child: Text(
-                    c.name.substring(0, 1),
-                    style: const TextStyle(
-                        fontSize: 28, fontWeight: FontWeight.w800),
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: AppColors.brandGold,
+                      width: 2,
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(4),
+                  child: const CircleAvatar(
+                    radius: 36,
+                    backgroundColor: AppColors.brandPurple,
+                    child: Icon(
+                      Icons.business,
+                      size: 36,
+                      color: AppColors.brandGold,
+                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md),

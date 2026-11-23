@@ -36,11 +36,28 @@ class BrandAppBar extends StatelessWidget implements PreferredSizeWidget {
           const Text('UniCurePlus'),
         ],
       ),
-      actions: const [
-        Icon(Icons.search, size: 20, color: AppColors.grey700),
-        SizedBox(width: AppSpacing.lg),
-        Icon(Icons.notifications_none, size: 20, color: AppColors.grey700),
-        SizedBox(width: AppSpacing.lg),
+      actions: [
+        IconButton(
+          icon: Icon(
+            ThemeController.instance.isDark
+                ? Icons.light_mode
+                : Icons.dark_mode,
+            size: 20,
+          ),
+          tooltip: ThemeController.instance.isDark
+              ? 'Gunakan mod terang'
+              : 'Gunakan mod gelap',
+          onPressed: ThemeController.instance.toggleTheme,
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Icon(
+          Icons.notifications_none,
+          size: 20,
+          color: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.grey300
+              : AppColors.grey700,
+        ),
+        const SizedBox(width: AppSpacing.lg),
       ],
       bottom: const PreferredSize(
         preferredSize: Size.fromHeight(2),

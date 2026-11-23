@@ -36,6 +36,21 @@ class AppSpacing {
   static const double radius = 10;
 }
 
+class ThemeController extends ChangeNotifier {
+  ThemeController._();
+
+  static final ThemeController instance = ThemeController._();
+
+  bool _isDark = false;
+
+  bool get isDark => _isDark;
+
+  void toggleTheme() {
+    _isDark = !_isDark;
+    notifyListeners();
+  }
+}
+
 class AppTheme {
   AppTheme._();
 
@@ -130,6 +145,103 @@ class AppTheme {
         backgroundColor: AppColors.purple100,
         side: const BorderSide(color: AppColors.grey200),
         labelStyle: const TextStyle(fontSize: 12, color: AppColors.grey700),
+      ),
+    );
+  }
+
+  static ThemeData get dark {
+    final base = ThemeData.dark(useMaterial3: true);
+
+    return base.copyWith(
+      scaffoldBackgroundColor: const Color(0xFF17151C),
+      colorScheme: const ColorScheme.dark(
+        primary: AppColors.brandPurple,
+        onPrimary: AppColors.white,
+        secondary: AppColors.brandGold,
+        onSecondary: AppColors.black,
+        surface: Color(0xFF221F29),
+        onSurface: AppColors.white,
+      ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Color(0xFF221F29),
+        foregroundColor: AppColors.white,
+        elevation: 0,
+        centerTitle: false,
+        scrolledUnderElevation: 0,
+        titleTextStyle: TextStyle(
+          color: AppColors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      cardTheme: CardThemeData(
+        color: const Color(0xFF221F29),
+        elevation: 0,
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.radius),
+          side: const BorderSide(color: Color(0xFF3A3542)),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: const Color(0xFF221F29),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.lg,
+          vertical: AppSpacing.md,
+        ),
+        hintStyle: const TextStyle(color: AppColors.grey300),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.radius),
+          borderSide: const BorderSide(color: Color(0xFF4A4552)),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.radius),
+          borderSide: const BorderSide(color: Color(0xFF4A4552)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.radius),
+          borderSide: const BorderSide(
+            color: AppColors.brandGold,
+            width: 1.5,
+          ),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.brandPurple,
+          foregroundColor: AppColors.white,
+          minimumSize: const Size.fromHeight(50),
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSpacing.radius),
+          ),
+          textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.brandGold,
+          minimumSize: const Size.fromHeight(50),
+          side: const BorderSide(color: AppColors.brandGold),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSpacing.radius),
+          ),
+          textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(foregroundColor: AppColors.brandGold),
+      ),
+      dividerTheme: const DividerThemeData(
+        color: Color(0xFF3A3542),
+        thickness: 1,
+        space: 1,
+      ),
+      chipTheme: base.chipTheme.copyWith(
+        backgroundColor: const Color(0xFF342B40),
+        side: const BorderSide(color: Color(0xFF4A4552)),
+        labelStyle: const TextStyle(fontSize: 12, color: AppColors.white),
       ),
     );
   }
