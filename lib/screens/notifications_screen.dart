@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import '../data/dummy_data.dart';
 import '../theme/app_theme.dart';
 import '../widgets/brand_app_bar.dart';
@@ -11,7 +13,16 @@ class NotificationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     const items = DummyData.notifications;
     return Scaffold(
-      appBar: const BrandAppBar(showBack: true),
+      appBar: BrandAppBar(
+        showBack: true,
+        onBack: () {
+          if (context.canPop()) {
+            context.pop();
+          } else {
+            context.go('/home');
+          }
+        },
+      ),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [

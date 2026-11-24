@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
 import '../data/dummy_data.dart';
 import '../services/auth_api.dart';
 import '../services/auth_session.dart';
@@ -96,12 +96,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           const SizedBox(height: AppSpacing.lg),
-          SecondaryButton(
-            label: 'Notifikasi',
-            icon: Icons.notifications_none,
-            onPressed: () => context.push('/notifikasi'),
-          ),
-          const SizedBox(height: AppSpacing.md),
           PrimaryButton(
             label: _isLoggingOut ? 'Sedang log keluar...' : 'Log keluar',
             icon: Icons.logout,

@@ -24,24 +24,47 @@ class HomeScreen extends StatelessWidget {
           Text(DummyData.company.name,
               style: const TextStyle(color: AppColors.grey500, fontSize: 13)),
           const SizedBox(height: AppSpacing.lg),
-          Row(
-            children: [
-              Expanded(
-                child: _StatCard(
-                  value: '1',
-                  label: 'Pelawaan terbuka',
-                  onTap: () => context.go('/pelawaan'),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              const spacing = AppSpacing.md;
+              final isWide = constraints.maxWidth >= 720;
+              final cardWidth = isWide
+                  ? (constraints.maxWidth - spacing * 2) / 3
+                  : (constraints.maxWidth - spacing) / 2;
+              final unreadCount =
+                  DummyData.notifications.where((item) => item.unread).length;
+              final cards = [
+                SizedBox(
+                  width: cardWidth,
+                  child: _StatCard(
+                    value: '1',
+                    label: 'Pelawaan terbuka',
+                    onTap: () => context.go('/pelawaan'),
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: _StatCard(
-                  value: '1',
-                  label: 'Tawaran aktif',
-                  onTap: () => context.go('/tawaran-saya'),
+                SizedBox(
+                  width: cardWidth,
+                  child: _StatCard(
+                    value: '1',
+                    label: 'Tawaran aktif',
+                    onTap: () => context.go('/tawaran-saya'),
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  width: isWide ? cardWidth : constraints.maxWidth,
+                  child: _InboxCard(
+                    unreadCount: unreadCount,
+                    onTap: () => context.push('/notifikasi'),
+                  ),
+                ),
+              ];
+
+              return Wrap(
+                spacing: spacing,
+                runSpacing: spacing,
+                children: cards,
+              );
+            },
           ),
           const SizedBox(height: AppSpacing.xl),
           const SectionLabel('Tarikh tutup terdekat'),
@@ -116,6 +139,94 @@ class _StatCard extends StatelessWidget {
               Text(label,
                   style:
                       const TextStyle(color: AppColors.grey500, fontSize: 12)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _InboxCard extends StatelessWidget {
+  final int unreadCount;
+  final VoidCallback onTap;
+
+  const _InboxCard({required this.unreadCount, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final badgeText = unreadCount > 99 ? '99+' : '$unreadCount';
+
+    return Card(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppSpacing.radius),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: isDark
+                          ? const Color(0xFF342B40)
+                          : AppColors.purple100,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.notifications_outlined,
+                        color: isDark
+                            ? AppColors.brandGold
+                            : AppColors.brandPurple,
+                        size: 28,
+                      ),
+                    ),
+                  ),
+                  if (unreadCount > 0)
+                    Positioned(
+                      top: -6,
+                      right: -9,
+                      child: Container(
+                        constraints:
+                            const BoxConstraints(minWidth: 20, minHeight: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFFD32F2F),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Text(
+                          badgeText,
+                          style: const TextStyle(
+                            color: AppColors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              const Text(
+                'Peti masuk',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                unreadCount == 0 ? 'Tiada notifikasi baharu' : 'Belum dibaca',
+                style: const TextStyle(color: AppColors.grey500, fontSize: 12),
+              ),
             ],
           ),
         ),

@@ -49,15 +49,6 @@ class BrandAppBar extends StatelessWidget implements PreferredSizeWidget {
               : 'Gunakan mod gelap',
           onPressed: ThemeController.instance.toggleTheme,
         ),
-        const SizedBox(width: AppSpacing.sm),
-        Icon(
-          Icons.notifications_none,
-          size: 20,
-          color: Theme.of(context).brightness == Brightness.dark
-              ? AppColors.grey300
-              : AppColors.grey700,
-        ),
-        const SizedBox(width: AppSpacing.lg),
       ],
       bottom: const PreferredSize(
         preferredSize: Size.fromHeight(2),
