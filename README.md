@@ -167,3 +167,10 @@ Authorization: Bearer <token>
 - API endpoints must be reachable from the selected Flutter target.
 - Demo credentials and database settings are intended for local development, not production.
 - Plaintext seed passwords are upgraded to password hashes after the first login.
+
+## Mobile LAN Preview (iOS / Android)
+
+To test the prototype on a physical phone over the same Wi-Fi network without conflicting with port `8080`:
+
+```powershell
+flutter run -d web-server --web-hostname 0.0.0.0 --web-port 8085
