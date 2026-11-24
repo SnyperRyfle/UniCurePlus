@@ -1,3 +1,4 @@
+// Use http://192.168.0.25/uitm_api/auth.php when testing on physical mobile devices
 import 'dart:async';
 import 'dart:convert';
 
