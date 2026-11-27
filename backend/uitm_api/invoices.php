@@ -66,7 +66,9 @@ try {
     }
 
     $orderQuery = $pdo->prepare(
-        'SELECT id, amount FROM orders WHERE id = :order_id AND company_id = :company_id'
+        'SELECT id, po_number, amount
+         FROM orders
+         WHERE id = :order_id AND company_id = :company_id'
     );
     $orderQuery->execute([
         'order_id' => $orderId,
@@ -107,7 +109,7 @@ try {
         'data' => [
             'id' => $invoiceId,
             'invoice_no' => $invoiceNo,
-            'order_ref' => $order['id'],
+            'order_ref' => $order['po_number'],
             'date' => $invoiceDate,
             'amount' => (float) $amount,
             'status' => 'Dihantar',

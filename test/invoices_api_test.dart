@@ -63,7 +63,7 @@ void main() {
 
     final invoice = await InvoicesApi(client: client).createInvoice(
       invoiceNo: ' INV-TEST-123 ',
-      orderId: 'PO-CONTOH-015',
+      orderId: 'ORDER-DB-015',
       date: '2026-11-19',
       amount: 2308,
     );
@@ -71,11 +71,12 @@ void main() {
     expect(capturedRequest.method, 'POST');
     expect(jsonDecode(capturedRequest.body), {
       'invoice_no': 'INV-TEST-123',
-      'order_id': 'PO-CONTOH-015',
+      'order_id': 'ORDER-DB-015',
       'date': '2026-11-19',
       'amount': 2308,
     });
     expect(invoice.id, 'API-test123');
+    expect(invoice.orderRef, 'PO-CONTOH-015');
     expect(invoice.status, 'Dihantar');
   });
 
